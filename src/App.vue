@@ -1,8 +1,5 @@
 <template>
-<v-app>
-  <v-system-bar>
-      Open day - Liceo Vallone Galatina - Tour Virtuale
-  </v-system-bar>
+<v-app>  
   <v-navigation-drawer app>
     <v-list-item>
         <v-list-item-content>
@@ -22,9 +19,10 @@
         nav
       >
         <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          link
+          v-for="item in leftMenu"
+          :key="item.id"
+          @click="menuActionClick(item.action)"
+          link          
         >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
@@ -34,53 +32,58 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-      </v-list>
+      </v-list>      
   </v-navigation-drawer>
 
   <v-app-bar app>
-        <v-select
-          :items="streamingEngine"
-          label="Motore di streaming"
-        ></v-select>
-
-        <v-select
-          :items="rooms"
-          label="Scegli attività"
-        ></v-select>
+      Virtual Open Day - Liceo Vallone Galatina - Prossimo evento 17/01/2020
   </v-app-bar>
 
   <!-- Sizes your content based upon application components -->
   <v-main>
-    <!-- Provides the application the proper gutter -->
-    <v-container fluid>
-
-      <!-- If using vue-router -->
-      <router-view></router-view>
-    </v-container>
+    <Tiledesk></Tiledesk>
+    <Live v-if="selectedCategory=='live'"> </Live> 
+    <Registered v-if="selectedCategory=='registered'"></Registered> 
+    <About v-if="selectedCategory=='about'"></About> 
   </v-main>
 
   <v-footer app>
-    Copyright - Giovanni Torsello - 2021
+    <p><small>Copyright - Giovanni Torsello - Mirko Leo - Andrea Tricco - 2021</small></p>
   </v-footer>
 </v-app>
 
 </template>
 
 <script>
-
+import Tiledesk from './components/Tiledesk'
+import Live from './components/Live'
+import Registered from './components/Registered'
+import About from './components/About'
 export default {
+  
   name: 'App',
-
+  
   components: {
+    Tiledesk,
+    Live,
+    Registered,
+    About
   },
 
   data: () => ({
-    streamingEngine: ['Facebook', 'Youtube', 'Switch TV'],
-    rooms: ['Principale', 'Liceo Scientifico', 'Liceo Linguistico'],
-    items: [
-          { title: 'Online ora', icon: 'mdi-view-dashboard' },
-          { title: 'Registrazioni', icon: 'mdi-image' },
-          { title: 'About', icon: 'mdi-help-box' }]
+    selectedCategory: 'registered',
+    leftMenu: [
+          { id: "1", title: 'Online ora', icon: 'mdi-view-dashboard', action: "live" },
+          { id: "2", title: 'Registrazioni', icon: 'mdi-image', action: "registered"},
+          { id: "3", title: 'Info su', icon: 'mdi-help-box', action: "about" }]
   }),
+  mounted: function () {
+      
+  },
+  methods: {
+    menuActionClick(action) {
+        this.selectedCategory=action;
+    }
+  }
 };
 </script>
