@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Vue from 'vue'
 import VueYouTubeEmbed from 'vue-youtube-embed'
 
@@ -32,11 +33,24 @@ import VueYouTubeEmbed from 'vue-youtube-embed'
     data: () => ({
       videoId: 'HP7Snb9tH4U',
       streamingEngines: ['Youtube', 'Facebook', 'Twitch', 'Periscope'],      
+      urlGoogleSheetLive: "https://spreadsheets.google.com/feeds/list/1iX2I2-YwU0fgxxiatlyKFrQtJBZ5MHCM4SC_kIUkSSI/1/public/values?alt=json"
     }),
     mounted: function () {
       Vue.use(VueYouTubeEmbed)
       // if you don't want install the component globally
       Vue.use(VueYouTubeEmbed, { global: false })      
-  }
+
+      //get infos from google
+      axios
+        .get(this.urlGoogleSheetLive)
+        .then(response => (
+            this.parseLiveContents(response.data.feed.entry)
+        ))
+    },
+    methods: {
+      parseLiveContents(entries) {   
+        console.log(entries);
+      }
+    }
   }
 </script>
