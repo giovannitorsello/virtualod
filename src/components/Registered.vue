@@ -10,11 +10,6 @@
           v-on:change="changeCategory"
         ></v-select>
         </v-col>
-       <v-col width="10%"></v-col>
-  </v-row>
-
-  <v-row>
-      <v-col width="10%"></v-col>
       <v-col>
         <v-select
           v-model="selectContent"
@@ -31,14 +26,14 @@
         </v-col>
         <v-col width="10%"></v-col>
     </v-row>
-    <!-- Provides the application the proper gutter -->
-       <v-row>
-       <v-col width="10%"></v-col>
-       <v-col>
-          <youtube :video-id="videoId" player-width="1080" player-height="720"></youtube>      
-        </v-col>
-        <v-col width="10%"></v-col>
-     </v-row>
+
+    <v-row>
+      <v-col width="10%"></v-col>
+      <v-col>
+        <youtube :video-id="videoId" :player-width="calcWidth" :player-height="calcHeigth"></youtube>      
+      </v-col>
+      <v-col width="10%"></v-col>
+    </v-row>
 </div>
 </template>
 
@@ -52,6 +47,8 @@ import VueYouTubeEmbed from 'vue-youtube-embed'
     components: {      
     },
     data: () => ({
+      calcWidth: 720,
+      calcHeigth: 480,
       videoId: 'XmwzqpLuwGo',
       categories: [],
       contents: [],
@@ -68,7 +65,7 @@ import VueYouTubeEmbed from 'vue-youtube-embed'
       axios
         .get(this.urlGoogleSheetLive)
         .then(response => (
-            this.parseLiveContents(response.data.feed.entry)
+            this.parseContents(response.data.feed.entry)
         ))
     },
     methods: {
@@ -90,7 +87,7 @@ import VueYouTubeEmbed from 'vue-youtube-embed'
           }
         })
       },
-      parseLiveContents(entries) {   
+      parseContents(entries) {   
         var i=0;
         entries.forEach(element => {
           i=i+1;

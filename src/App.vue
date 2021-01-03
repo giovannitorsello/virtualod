@@ -1,43 +1,19 @@
 <template>
-<v-app>  
-  <v-navigation-drawer app>
-    <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="title">
-            Attività disponibili
-          </v-list-item-title>
-          <v-list-item-subtitle>
-            seleziona l'attività
-          </v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
+<div class=".d-inline">
+  <v-toolbar>
+    <v-toolbar-side-icon></v-toolbar-side-icon>
+    <v-toolbar-title>Liceo Vallone - Open Day App </v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-toolbar-items class="hidden-sm-and-down">
+      <v-btn v-for="item in leftMenu" :key="item.id" @click="menuActionClick(item.action)" link>{{ item.title }}</v-btn>      
+    </v-toolbar-items>
+  </v-toolbar>
+  
+<v-app light>  
 
-      <v-divider></v-divider>
-
-      <v-list
-        dense
-        nav
-      >
-        <v-list-item
-          v-for="item in leftMenu"
-          :key="item.id"
-          @click="menuActionClick(item.action)"
-          link          
-        >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>      
-  </v-navigation-drawer>
-
-  <v-app-bar app>
+  <!--v-app-bar app>
       Virtual Open Day - Liceo Vallone Galatina - Prossimo evento 17/01/2020
-  </v-app-bar>
+  </--v-app-bar-->
 
   <!-- Sizes your content based upon application components -->
   <v-main>
@@ -48,13 +24,67 @@
   </v-main>
 
   <v-footer app>
-    <p><small>Copyright - Giovanni Torsello - Mirko Leo - Andrea Tricco - 2021</small></p>
+    <p><small><small>Copyright - Giovanni Torsello - Mirko Leo - Andrea Tricco - 2021</small></small></p>
   </v-footer>
 </v-app>
 
+
+
+<v-dialog  v-model="dialog" width="400">
+      <!--template v-slot:activator="{ on }">
+        <v-btn
+          color="red lighten-2"
+          dark
+          v-on="on"
+        >
+          Esci
+        </v-btn>
+      </template-->
+
+      <v-card>
+        <v-card-title
+          class="headline grey lighten-2"
+          primary-title
+        >
+          Suggerimenti per l'utilizzo
+        </v-card-title>
+
+        <v-card-text>
+          Benvenuti all'Open Day del Liceo Vallone. Questa semplice applicazione consente la visualizzazione dei contenuti
+          in diretta e di contenuti preregistrati che illustrano le attività della scuola.
+          <br>
+          E' presente un sistema di messaggistica (chat) interna, totalmente sicura e privata con cui puoi 
+          porre delle domande al nostro staff. Inserisci il tuo nome e la tua email. 
+          <br>
+          Se lo vuoi puo lasciare il numero di smartphone all'interno di un messaggio nel caso in cui desideri essere ricontattato in forma privata. 
+          <br>
+          Siamo a tua disposizione per ogni richiesta di chiarimento e di supporto.
+          <br>
+          Nella sezione <b>Info Su</b> potrai trovare la documentazione ufficiale.
+          <br>
+          La chat è contrassegnata dall'icona
+          <v-img width="25" height="25" src="tiledesk_chat_icon.png"></v-img>
+          <br>
+          Grazie per la partecipazione e buona visione.
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" @click="dialog = false">
+            Accetta e continua
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+
+</div>
 </template>
 
 <script>
+const path = require('path');
 import Tiledesk from './components/Tiledesk'
 import Live from './components/Live'
 import Registered from './components/Registered'
@@ -71,7 +101,9 @@ export default {
   },
 
   data: () => ({
+    dialog: true,
     selectedCategory: 'registered',
+    chatIcon: path.join(__dirname, 'public', 'tiledek_chat_icon.png'),
     leftMenu: [
           { id: "1", title: 'Online ora', icon: 'mdi-view-dashboard', action: "live" },
           { id: "2", title: 'Registrazioni', icon: 'mdi-image', action: "registered"},
