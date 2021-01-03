@@ -65,6 +65,8 @@
           La chat è contrassegnata dall'icona
           <v-img width="25" height="25" src="tiledesk_chat_icon.png"></v-img>
           <br>
+          Scegli la tematica che ti interessa di più in alto.
+          <br>
           Grazie per la partecipazione e buona visione.
         </v-card-text>
 
@@ -102,7 +104,7 @@ export default {
 
   data: () => ({
     dialog: true,
-    selectedCategory: 'registered',
+    selectedCategory: 'live',
     chatIcon: path.join(__dirname, 'public', 'tiledek_chat_icon.png'),
     leftMenu: [
           { id: "1", title: 'Online ora', icon: 'mdi-view-dashboard', action: "live" },

@@ -87,12 +87,9 @@ import VueYouTubeEmbed from 'vue-youtube-embed'
           }
         })
       },
-      parseContents(entries) {   
-        var i=0;
-        entries.forEach(element => {
-          i=i+1;
-          this.googleData.push({
-            //id: i,
+      parseContents(entries) {        
+        entries.forEach(element => {          
+          this.googleData.push({            
             descrizione: element.gsx$descrizione.$t,
             tipologia: element.gsx$tipologia.$t, 
             titolo: element.gsx$titolo.$t,
