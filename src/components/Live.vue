@@ -13,7 +13,7 @@
     </v-row>
     <v-row>
       <v-col>
-        <div class="contents-card"  v-if="!isStreaming">>
+        <div class="contents-card"  v-if="!isStreaming">
           <v-card  v-for="content in contents" v-bind:key="content.idvideo"
                   class="mx-auto my-12"
                   max-width="300"
