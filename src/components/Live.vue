@@ -1,8 +1,6 @@
 <template>
 <div>
-  
-
-  <v-row>
+  <v-row  v-if="!isStreaming">
       <v-col>
         <div class="category-select"> 
         <v-select
@@ -15,7 +13,7 @@
     </v-row>
     <v-row>
       <v-col>
-        <div class="contents-card">
+        <div class="contents-card"  v-if="!isStreaming">>
           <v-card  v-for="content in contents" v-bind:key="content.idvideo"
                   class="mx-auto my-12"
                   max-width="300"
@@ -36,15 +34,26 @@
                     <v-btn
                       color="deep-purple lighten-2"
                       text
-                      @click="openLive"
+                      @click="openLive(content)"
                     >
                       Apri la live
                     </v-btn>
                   </v-card-actions>
           </v-card>
         </div>
+        <div class="contents-card" v-if="isStreaming">
+            <youtube  :video-id="videoId" :player-width="calcWidth" :player-height="calcHeigth"></youtube>
+            <Tiledesk :departmentId="departmentId"></Tiledesk>                           
+        </div>
+      </v-col>      
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <div class="contents-card" v-if="isStreaming">
+          <v-btn class="ma-2" color="success" @click="exitLive()">Esci</v-btn>
+        </div>
       </v-col>
-        <!--youtube :video-id="videoId" :player-width="calcWidth" :player-height="calcHeigth"></!--youtube-->      
     </v-row>
 
 </div>
@@ -54,10 +63,11 @@
 import axios from 'axios'
 import Vue from 'vue'
 import VueYouTubeEmbed from 'vue-youtube-embed'
-
+import Tiledesk from './Tiledesk'
   export default {
     name: 'Streaming',
-    components: {      
+    components: {     
+      Tiledesk 
     },
     data: () => ({
       videoId: 'HP7Snb9tH4U',
@@ -69,6 +79,8 @@ import VueYouTubeEmbed from 'vue-youtube-embed'
       contents: [],
       category: "",
       content: "",
+      departmentId: "",
+      isStreaming: false,
       urlGoogleSheetLive: "https://spreadsheets.google.com/feeds/list/1iX2I2-YwU0fgxxiatlyKFrQtJBZ5MHCM4SC_kIUkSSI/1/public/values?alt=json"
     }),
     mounted: function () {
@@ -84,9 +96,17 @@ import VueYouTubeEmbed from 'vue-youtube-embed'
         ))
     },
     methods: {
+      exitLive() {
+        //delete Tiledesk chat
+        /*var olddiv=document.getElementById('tiledesk-container');
+        while (olddiv.firstChild) {
+          olddiv.removeChild(olddiv.lastChild);
+        }
+        olddiv.innerHTML = "";*/
+        this.isStreaming=false;
+      },
       parseContents(entries) {   
         entries.forEach(element => {          
-          console.log(element);
           this.googleData.push({            
             descrizione: element.gsx$descrizione.$t,
             tipologia: element.gsx$tipologia.$t, 
@@ -96,6 +116,7 @@ import VueYouTubeEmbed from 'vue-youtube-embed'
             oraFine: element.gsx$orafine.$t,
             linkImmagine: element.gsx$linkimmagine.$t,
             idVideo: element.gsx$idvideo.$t,
+            chatDepartmentId: element.gsx$chatdepartmentid.$t,
           });
 
 /*
@@ -135,14 +156,16 @@ import VueYouTubeEmbed from 'vue-youtube-embed'
               oraInizio: element.oraInizio,
               oraFine: element.oraFine,
               idVideo: element.idVideo,
-              linkImmagine: element.linkImmagine
+              linkImmagine: element.linkImmagine,
+              chatDepartmentId: element.chatDepartmentId
             })
           }
         })
       },
-      openLive(object) {
-        console.log(object);
-
+      openLive(content) {
+        this.idVideo=content.idVideo;
+        this.departmentId=content.chatDepartmentId;
+        this.isStreaming="true";
       }
     }
   }

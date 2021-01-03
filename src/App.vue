@@ -17,14 +17,13 @@
 
   <!-- Sizes your content based upon application components -->
   <v-main>
-    <Tiledesk></Tiledesk>
     <Live v-if="selectedCategory=='live'"> </Live> 
     <Registered v-if="selectedCategory=='registered'"></Registered> 
     <About v-if="selectedCategory=='about'"></About> 
   </v-main>
 
   <v-footer app>
-    <p><small><small>Copyright - Giovanni Torsello - Mirko Leo - Andrea Tricco - 2021</small></small></p>
+    <p><small><small>Copyright - Giovanni Torsello - 2021  -- Chat engine powered by Tiledesk</small></small></p>
   </v-footer>
 </v-app>
 
@@ -87,7 +86,6 @@
 
 <script>
 const path = require('path');
-import Tiledesk from './components/Tiledesk'
 import Live from './components/Live'
 import Registered from './components/Registered'
 import About from './components/About'
@@ -96,7 +94,6 @@ export default {
   name: 'App',
   
   components: {
-    Tiledesk,
     Live,
     Registered,
     About
