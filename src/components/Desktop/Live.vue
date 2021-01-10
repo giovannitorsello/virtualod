@@ -82,8 +82,7 @@
                         <v-card-text>                    
                           <div class="my-4 subtitle-1">
                             {{content.tipologia}}
-                          </div>
-                          <div>{{content.descrizione}}</div>
+                          </div>                          
                         </v-card-text>
 
                         <v-divider class="mx-4"></v-divider>
