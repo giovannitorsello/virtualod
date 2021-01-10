@@ -42,21 +42,23 @@
                   </v-card-actions>
           </v-card>
         </div>
+        
+      </v-col>      
+    </v-row>
+-->
+
+    <v-row>
+      <v-col>
         <div class="contents-card" v-if="isStreaming">
             <youtube  :video-id="videoId" :player-width="calcWidth" :player-height="calcHeigth"></youtube>
             <Tiledesk :departmentId="departmentId"></Tiledesk>                           
         </div>
-      </v-col>      
-    </v-row>
-
-    <v-row>
-      <v-col>
         <div class="contents-card" v-if="isStreaming">
           <v-btn class="ma-2" color="success" @click="exitLive()">Esci</v-btn>
         </div>
       </v-col>
     </v-row>
-  -->
+  
     <v-row>
       <v-col>
         <v-carousel
@@ -109,11 +111,11 @@
 import axios from 'axios'
 import Vue from 'vue'
 import VueYouTubeEmbed from 'vue-youtube-embed'
-//import Tiledesk from './Tiledesk'
+import Tiledesk from './Tiledesk'
   export default {
     name: 'Streaming',
     components: {     
-     // Tiledesk 
+      Tiledesk 
     },
     data: () => ({
       continuous: "false",
