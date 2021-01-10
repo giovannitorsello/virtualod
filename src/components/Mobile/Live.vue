@@ -1,5 +1,6 @@
 <template>
 <div>
+  <!--
   <v-row  v-if="!isStreaming">
       <v-col>
         <div class="category-select"> 
@@ -11,50 +12,58 @@
         </div>
         </v-col>        
     </v-row>
-    <v-row>
-      <v-col>
-        <div class="contents-card"  v-if="!isStreaming">
-          <v-card  v-for="content in contents" v-bind:key="content.idvideo"
-                  class="mx-auto my-12"
-                  max-width="300"
-                >
-                  <v-img :src="content.linkImmagine" ></v-img>
-                  <v-card-title>{{content.titolo}}</v-card-title>
+    -->
+    <div v-if="!isStreaming">
+      <v-row v-for="content in contents" v-bind:key="content.idvideo">
+        <v-col>
+          <div class="contents-card">
+            <v-card
+                    class="mx-auto my-12"
+                    max-width="300"
+                  >
+                    <v-img :src="content.linkImmagine" ></v-img>
+                    <v-card-title>{{content.titolo}}</v-card-title>
 
-                  <v-card-text>                    
-                    <div class="my-4 subtitle-1">
-                      {{content.tipologia}}
-                    </div>
-                    <div>{{content.descrizione}}</div>
-                  </v-card-text>
+                    <v-card-text>                    
+                      <div class="my-4 subtitle-1">
+                        {{content.tipologia}}
+                      </div>                      
+                    </v-card-text>
 
-                  <v-divider class="mx-4"></v-divider>
+                    <v-divider class="mx-4"></v-divider>
 
-                  <v-card-actions>
-                    <v-btn
-                      color="deep-purple lighten-2"
-                      text
-                      @click="openLive(content)"
-                    >
-                      Apri la live
-                    </v-btn>
-                  </v-card-actions>
-          </v-card>
-        </div>
-        <div class="contents-card" v-if="isStreaming">
-            <youtube  :video-id="videoId" :player-width="calcWidth" :player-height="calcHeigth"></youtube>
-            <Tiledesk :departmentId="departmentId"></Tiledesk>                           
-        </div>
-      </v-col>      
-    </v-row>
+                    <v-card-actions>
+                      <v-btn
+                        color="deep-purple lighten-2"
+                        text
+                        @click="openLive(content)"
+                      >
+                        Apri la live
+                      </v-btn>
+                    </v-card-actions>
+            </v-card>
+          </div>          
+        </v-col>      
+      </v-row>
+    </div>
 
-    <v-row>
-      <v-col>
-        <div class="contents-card" v-if="isStreaming">
-          <v-btn class="ma-2" color="success" @click="exitLive()">Esci</v-btn>
-        </div>
-      </v-col>
-    </v-row>
+    <div  v-if="isStreaming">
+      <v-row>
+        <v-col>
+          <div class="contents-card" v-if="isStreaming">
+              <youtube  :video-id="videoId" :player-width="calcWidth" :player-height="calcHeigth"></youtube>
+              <Tiledesk :departmentId="departmentId"></Tiledesk>                           
+          </div>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <div class="contents-card">
+            <v-btn class="ma-2" color="success" @click="exitLive()">Esci</v-btn>
+          </div>
+        </v-col>
+      </v-row>
+    </div>
 
 </div>
 </template>
@@ -71,8 +80,8 @@ import Tiledesk from './Tiledesk'
     },
     data: () => ({
       videoId: 'HP7Snb9tH4U',
-      calcWidth: 720,
-      calcHeigth: 480,
+      calcWidth: 400,
+      calcHeigth: 225,
       streamingEngines: ['Youtube', 'Facebook', 'Twitch', 'Periscope'],      
       googleData: [],
       categories: [],
@@ -97,16 +106,10 @@ import Tiledesk from './Tiledesk'
     },
     methods: {
       exitLive() {
-        //delete Tiledesk chat
-        /*var olddiv=document.getElementById('tiledesk-container');
-        while (olddiv.firstChild) {
-          olddiv.removeChild(olddiv.lastChild);
-        }
-        olddiv.innerHTML = "";*/
         this.isStreaming=false;
       },
       parseContents(entries) {   
-        entries.forEach(element => {          
+        entries.forEach((element,index,array) => {          
           this.googleData.push({            
             descrizione: element.gsx$descrizione.$t,
             tipologia: element.gsx$tipologia.$t, 
@@ -119,7 +122,7 @@ import Tiledesk from './Tiledesk'
             chatDepartmentId: element.gsx$chatdepartmentid.$t,
           });
 
-/*
+
           this.contents.push({            
             descrizione: element.gsx$titolo.$t,
             tipologia: element.gsx$tipologia.$t, 
@@ -130,12 +133,27 @@ import Tiledesk from './Tiledesk'
             linkImmagine: element.gsx$linkimmagine.$t,
             idVideo: element.gsx$idvideo.$t,
           });
-*/
+
           //construisce scelta delle categorie
           if(this.categories.indexOf(element.gsx$tipologia.$t)===-1){            
             this.categories.push(element.gsx$tipologia.$t);
           }
+
+          if(index===array.length-1) {
+            this.scrambleContents();
+          }
+
         });
+      },
+      scrambleContents() {
+        var nFixed=4;
+        var nRandom=this.contents.length-nFixed;
+        for (var i = nFixed; i < this.contents.length - 1; i++) {
+            var j = nFixed+Math.floor(Math.random() * nRandom);            
+            var temp = this.contents[i];
+            this.contents[i] = this.contents[j];
+            this.contents[j] = temp;
+        }
       },
       changeContent(content){
         console.log("Category has changed");
