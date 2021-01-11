@@ -50,7 +50,8 @@
     <v-row>
       <v-col>
         <div class="contents-card" v-if="isStreaming">
-            <youtube  :video-id="videoId" :player-width="calcWidth" :player-height="calcHeigth"></youtube>
+            <iframe width="424" height="240" :src="urlLive" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <!--youtube  :video-id="videoId" :player-width="calcWidth" :player-height="calcHeigth" host="https://youtu.be/"></youtube-->
             <Tiledesk :departmentId="departmentId"></Tiledesk>                           
         </div>
         <div class="contents-card" v-if="isStreaming">
@@ -119,8 +120,7 @@ import Tiledesk from './Tiledesk'
     data: () => ({
       continuous: "false",
       cycle: "cycle",
-      
-      videoId: 'HP7Snb9tH4U',
+      urlLive: "",
       calcWidth: 720,
       calcHeigth: 480,
       streamingEngines: ['Youtube', 'Facebook', 'Twitch', 'Periscope'],      
@@ -151,6 +151,7 @@ import Tiledesk from './Tiledesk'
       },
       parseContents(entries) {   
         entries.forEach((element,index,array) => {          
+          console.log(element.gsx$idvideo.$t);
           this.googleData.push({            
             descrizione: element.gsx$descrizione.$t,
             tipologia: element.gsx$tipologia.$t, 
@@ -163,7 +164,6 @@ import Tiledesk from './Tiledesk'
             chatDepartmentId: element.gsx$chatdepartmentid.$t,
           });
 
-
           this.contents.push({            
             descrizione: element.gsx$titolo.$t,
             tipologia: element.gsx$tipologia.$t, 
@@ -172,6 +172,7 @@ import Tiledesk from './Tiledesk'
             oraInizio: element.gsx$orainizio.$t,
             oraFine: element.gsx$orafine.$t,
             linkImmagine: element.gsx$linkimmagine.$t,
+            chatDepartmentId: element.gsx$chatdepartmentid.$t,
             idVideo: element.gsx$idvideo.$t,
           });
 
@@ -221,9 +222,13 @@ import Tiledesk from './Tiledesk'
         }
       },
       openLive(content) {
-        this.idVideo=content.idVideo;
+        this.urlLive="https://www.youtube.com/embed/"+content.idVideo;
         this.departmentId=content.chatDepartmentId;
         this.isStreaming="true";
+        console.log("Video ID is:");
+        console.log(this.idVideo);
+        console.log("Chat department is:");
+        console.log(this.departmentId);
       }
     }
   }

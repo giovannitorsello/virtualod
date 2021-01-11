@@ -51,7 +51,8 @@
       <v-row>
         <v-col>
           <div class="contents-card" v-if="isStreaming">
-              <youtube  :video-id="videoId" :player-width="calcWidth" :player-height="calcHeigth"></youtube>
+              <iframe :width="calcWidth" :height="calcHeigth" :src="urlLive" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              <!--youtube  :video-id="videoId" :player-width="calcWidth" :player-height="calcHeigth"></!--youtube-->
               <Tiledesk :departmentId="departmentId"></Tiledesk>                           
           </div>
         </v-col>
@@ -79,7 +80,7 @@ import Tiledesk from './Tiledesk'
       Tiledesk 
     },
     data: () => ({
-      videoId: 'HP7Snb9tH4U',
+      urlLive: "",
       calcWidth: 400,
       calcHeigth: 225,
       streamingEngines: ['Youtube', 'Facebook', 'Twitch', 'Periscope'],      
@@ -181,7 +182,7 @@ import Tiledesk from './Tiledesk'
         })
       },
       openLive(content) {
-        this.idVideo=content.idVideo;
+        this.urlLive="https://www.youtube.com/embed/"+content.idVideo;
         this.departmentId=content.chatDepartmentId;
         this.isStreaming="true";
       }
