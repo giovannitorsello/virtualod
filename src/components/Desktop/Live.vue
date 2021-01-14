@@ -1,110 +1,67 @@
 <template>
 <div>
-  <!--
-  <v-row  v-if="!isStreaming">
-      <v-col>
-        <div class="category-select"> 
-        <v-select
-          :items="categories"
-          label="Tematica"
-          v-on:change="changeCategory"
-        ></v-select>
-        </div>
-        </v-col>        
-    </v-row>
+  <div v-if="isStreaming">
     <v-row>
       <v-col>
-        <div class="contents-card"  v-if="!isStreaming">
-          <v-card  v-for="content in contents" v-bind:key="content.idvideo"
-                  class="mx-auto my-12"
-                  max-width="300"
-                >
-                  <v-img :src="content.linkImmagine" ></v-img>
-                  <v-card-title>{{content.titolo}}</v-card-title>
-
-                  <v-card-text>                    
-                    <div class="my-4 subtitle-1">
-                      {{content.tipologia}}
-                    </div>
-                    <div>{{content.descrizione}}</div>
-                  </v-card-text>
-
-                  <v-divider class="mx-4"></v-divider>
-
-                  <v-card-actions>
-                    <v-btn
-                      color="deep-purple lighten-2"
-                      text
-                      @click="openLive(content)"
-                    >
-                      Apri la live
-                    </v-btn>
-                  </v-card-actions>
-          </v-card>
-        </div>
-        
-      </v-col>      
-    </v-row>
--->
-
-    <v-row>
-      <v-col>
-        <div class="contents-card" v-if="isStreaming">
-            <iframe width="424" height="240" :src="urlLive" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="contents-card" >
+            <iframe :width="calcWidth" :height="calcHeigth" :src="urlLive" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             <!--youtube  :video-id="videoId" :player-width="calcWidth" :player-height="calcHeigth" host="https://youtu.be/"></youtube-->
             <Tiledesk :departmentId="departmentId"></Tiledesk>                           
         </div>
-        <div class="contents-card" v-if="isStreaming">
+        <div class="contents-card">
           <v-btn class="ma-2" color="success" @click="exitLive()">Esci</v-btn>
         </div>
       </v-col>
     </v-row>
+  </div>
   
+  <div v-if="!isStreaming">
     <v-row>
       <v-col>
-        <v-carousel
-            cycle
-            hide-delimiter-background
-            delimiter-icon="mdi-minus"
-            height="700"
-            >
-            <v-carousel-item
-              v-for="content in contents"
-              :key="content.idVideo"
-            >
-                <div class="contents-card"  v-if="!isStreaming">
-                <v-card
-                        class="mx-auto my-12"
-                        max-width="500"
-                      >
-                        <v-img :src="content.linkImmagine" ></v-img>
-                        <v-card-title>{{content.titolo}}</v-card-title>
+          <v-carousel
+              cycle
+              hide-delimiter-background
+              delimiter-icon="mdi-minus"
+              height="750"
+              >
+              <v-carousel-item
+                v-for="content in contents"
+                :key="content.idVideo"
+              >
+                  <div class="contents-card"  v-if="!isStreaming">
+                  <v-card
+                          class="mx-auto my-12"
+                          max-width="500"
+                        >
+                          <v-img :src="content.linkImmagine" ></v-img>
+                          <v-card-title>{{content.titolo}}</v-card-title>
 
-                        <v-card-text>                    
-                          <div class="my-4 subtitle-1">
-                            {{content.tipologia}}
-                          </div>                          
-                        </v-card-text>
+                          <v-card-text>                    
+                            <div class="my-4 subtitle-1">
+                              {{content.tipologia}}
+                            </div>                          
+                          </v-card-text>
 
-                        <v-divider class="mx-4"></v-divider>
+                          <v-divider class="mx-4"></v-divider>
 
-                        <v-card-actions>
-                          <v-btn
-                            color="deep-purple lighten-2"
-                            text
-                            @click="openLive(content)"
-                          >
-                            Apri la live
-                          </v-btn>
-                        </v-card-actions>
-                </v-card>
-                </div>
-            </v-carousel-item>
-        </v-carousel>
+                          <v-card-actions>
+                            <v-btn
+                              color="deep-purple lighten-2"
+                              text
+                              @click="openLive(content)"
+                            >
+                              Apri la live
+                            </v-btn>
+                          </v-card-actions>
+                  </v-card>
+                  </div>
+              </v-carousel-item>
+          </v-carousel>        
       </v-col>
     </v-row>
-
+  </div>
 </div>
+
 </template>
 
 <script>
@@ -121,8 +78,8 @@ import Tiledesk from './Tiledesk'
       continuous: "false",
       cycle: "cycle",
       urlLive: "",
-      calcWidth: 720,
-      calcHeigth: 480,
+      calcWidth: 1080,
+      calcHeigth: 720,
       streamingEngines: ['Youtube', 'Facebook', 'Twitch', 'Periscope'],      
       googleData: [],
       categories: [],
