@@ -45,7 +45,7 @@
           E' presente un sistema di messaggistica (chat) interna, totalmente sicura e privata con cui puoi 
           porre delle domande al nostro staff. Inserisci il tuo nome e la tua email. 
           <br>
-          Se lo vuoi puo lasciare il numero di smartphone all'interno di un messaggio nel caso in cui desideri essere ricontattato in forma privata. 
+          Se lo vuoi puoi lasciare il numero di smartphone all'interno di un messaggio nel caso in cui desideri essere ricontattato in forma privata. 
           <br>
           Siamo a tua disposizione per ogni richiesta di chiarimento e di supporto.
           <br>
