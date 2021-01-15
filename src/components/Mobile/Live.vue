@@ -27,20 +27,24 @@
                     <v-card-text>                    
                       <div class="my-4 subtitle-1">
                         {{content.tipologia}}
-                      </div>                      
+                      </div>
+                      <div class="my-4 subtitle-1" v-if="!showOpenLiveButton">
+                        Domenica 17 Gennaio 2021, ore {{content.oraInizio}}
+                      </div>                        
                     </v-card-text>
 
                     <v-divider class="mx-4"></v-divider>
-
-                    <v-card-actions>
-                      <v-btn
-                        color="deep-purple lighten-2"
-                        text
-                        @click="openLive(content)"
-                      >
-                        Apri la live
-                      </v-btn>
-                    </v-card-actions>
+                    <div v-if="showOpenLiveButton">
+                      <v-card-actions>
+                        <v-btn
+                          color="deep-purple lighten-2"
+                          text
+                          @click="openLive(content)"
+                        >
+                          Apri la live
+                        </v-btn>
+                      </v-card-actions>
+                    </div>
             </v-card>
           </div>          
         </v-col>      
@@ -80,6 +84,7 @@ import Tiledesk from './Tiledesk'
       Tiledesk 
     },
     data: () => ({
+      showOpenLiveButton: false,
       urlLive: "",
       calcWidth: 400,
       calcHeigth: 225,
