@@ -84,7 +84,7 @@ import Tiledesk from './Tiledesk'
       Tiledesk 
     },
     data: () => ({
-      showOpenLiveButton: false,
+      showOpenLiveButton: true,
       urlLive: "",
       calcWidth: 400,
       calcHeigth: 225,
@@ -152,7 +152,7 @@ import Tiledesk from './Tiledesk'
         });
       },
       scrambleContents() {
-        var nFixed=4;
+        var nFixed=2;
         var nRandom=this.contents.length-nFixed;
         for (var i = nFixed; i < this.contents.length - 1; i++) {
             var j = nFixed+Math.floor(Math.random() * nRandom);            

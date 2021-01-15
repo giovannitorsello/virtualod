@@ -174,7 +174,7 @@ import Tiledesk from './Tiledesk'
         })
       },
       scrambleContents() {
-        var nFixed=4;
+        var nFixed=2;
         var nRandom=this.contents.length-nFixed;
         for (var i = nFixed; i < this.contents.length - 1; i++) {
             var j = nFixed+Math.floor(Math.random() * nRandom);            
