@@ -84,7 +84,7 @@ import Tiledesk from './Tiledesk'
       Tiledesk 
     },
     data: () => ({
-      showOpenLiveButton: true,
+      showOpenLiveButton: false,
       urlLive: "",
       calcWidth: 400,
       calcHeigth: 225,
