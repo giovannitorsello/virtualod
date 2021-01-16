@@ -4,9 +4,11 @@
     <v-row>
       <v-col>
         <div class="contents-card" >
-            <iframe :width="calcWidth" :height="calcHeigth" :src="urlLive" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <!--youtube  :video-id="videoId" :player-width="calcWidth" :player-height="calcHeigth" host="https://youtu.be/"></youtube-->
+            <iframe :width="calcWidth" :height="calcHeigth" :src="urlLive" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>            
             <Tiledesk :departmentId="departmentId"></Tiledesk>                           
+        </div>
+        <div class="contents-card">
+          <p>In caso di mancata visualizzazione clicca <a :href="urlLive"><b>qui</b></a> ma torna su questa pagina per scrivere le domande nella chat.</p>
         </div>
         <div class="contents-card">
           <v-btn class="ma-2" color="success" @click="exitLive()">Esci</v-btn>
@@ -40,13 +42,16 @@
                             <div class="my-4 subtitle-1">
                               {{content.tipologia}}
                             </div>
-                            <div class="my-4 subtitle-1" v-if="!showOpenLiveButton">
+                            <div class="my-4 subtitle-1">
                               Domenica 17 Gennaio 2021, ore {{content.oraInizio}}
+                            </div>
+                            <div class="my-4 subtitle-1"> 
+                              <small>{{content.stanzaMeet}}</small>
                             </div>                           
                           </v-card-text>
 
                           <v-divider class="mx-4"></v-divider>
-                          <div v-if="showOpenLiveButton">
+                          <div v-if="content.isReady">
                             <v-card-actions>
                               <v-btn
                                 color="deep-purple lighten-2"
@@ -79,7 +84,7 @@ import Tiledesk from './Tiledesk'
       Tiledesk 
     },
     data: () => ({
-      showOpenLiveButton: false,
+      showOpenLiveButton: true,
       continuous: "false",
       cycle: "cycle",
       urlLive: "",
@@ -106,6 +111,8 @@ import Tiledesk from './Tiledesk'
         .then(response => (
             this.parseContents(response.data.feed.entry)
         ))
+
+        setInterval(()=>{ this.updateStateLives() }, 3000);
     },
     methods: {
       exitLive() {        
@@ -113,14 +120,17 @@ import Tiledesk from './Tiledesk'
       },
       parseContents(entries) {   
         entries.forEach((element,index,array) => {          
-          console.log(element.gsx$idvideo.$t);
           this.googleData.push({            
             descrizione: element.gsx$descrizione.$t,
             tipologia: element.gsx$tipologia.$t, 
             titolo: element.gsx$titolo.$t,
-            responsabile: element.gsx$responsabile.$t,            
+            responsabile: element.gsx$responsabile.$t,
+            alunnoRegista: element.gsx$alunnoregista.$t,
+            stanzaMeet: element.gsx$stanzameet.$t,
+            data: element.gsx$data.$t,
             oraInizio: element.gsx$orainizio.$t,
             oraFine: element.gsx$orafine.$t,
+            startTime: element.gsx$starttime.$t,
             linkImmagine: element.gsx$linkimmagine.$t,
             idVideo: element.gsx$idvideo.$t,
             chatDepartmentId: element.gsx$chatdepartmentid.$t,
@@ -130,12 +140,17 @@ import Tiledesk from './Tiledesk'
             descrizione: element.gsx$titolo.$t,
             tipologia: element.gsx$tipologia.$t, 
             titolo: element.gsx$titolo.$t,
-            responsabile: element.gsx$responsabile.$t,            
+            responsabile: element.gsx$responsabile.$t,
+            alunnoRegista: element.gsx$alunnoregista.$t,
+            stanzaMeet: element.gsx$stanzameet.$t,
+            data: element.gsx$data.$t,            
             oraInizio: element.gsx$orainizio.$t,
             oraFine: element.gsx$orafine.$t,
+            startTime: element.gsx$starttime.$t,
             linkImmagine: element.gsx$linkimmagine.$t,
             chatDepartmentId: element.gsx$chatdepartmentid.$t,
             idVideo: element.gsx$idvideo.$t,
+            isReady: this.checkStartTime(element.gsx$starttime.$t)
           });
 
           //construisce scelta delle categorie
@@ -148,31 +163,6 @@ import Tiledesk from './Tiledesk'
           }
         });
       },
-      changeContent(content){
-        console.log("Category has changed");
-        console.log(content);
-        this.videoId=content.idvideo;
-      },
-      changeCategory(category) {
-        console.log("Category has changed");
-        console.log(category);
-        this.contents=[];
-        this.googleData.forEach(element => {
-          if(category===element.tipologia) {
-            this.contents.push({
-              tipologia: element.tipologia,
-              titolo: element.titolo,
-              descrizione: element.descrizione,
-              responsabile: element.responsabile,            
-              oraInizio: element.oraInizio,
-              oraFine: element.oraFine,
-              idVideo: element.idVideo,
-              linkImmagine: element.linkImmagine,
-              chatDepartmentId: element.chatDepartmentId
-            })
-          }
-        })
-      },
       scrambleContents() {
         var nFixed=2;
         var nRandom=this.contents.length-nFixed;
@@ -184,6 +174,7 @@ import Tiledesk from './Tiledesk'
         }
       },
       openLive(content) {
+        this.content=content;
         this.urlLive="https://www.youtube.com/embed/"+content.idVideo;
         this.departmentId=content.chatDepartmentId;
         this.isStreaming="true";
@@ -191,6 +182,19 @@ import Tiledesk from './Tiledesk'
         console.log(this.idVideo);
         console.log("Chat department is:");
         console.log(this.departmentId);
+      },
+      checkStartTime(dt) {
+        var now=new Date();
+        var startTime=new Date(dt);
+        if(now.getTime()>startTime.getTime())
+          return true;
+        else
+          return false;
+      },
+      updateStateLives() {
+        this.contents.forEach((element) => {
+          element.isReady=this.checkStartTime(element.startTime);
+        });
       }
     }
   }
