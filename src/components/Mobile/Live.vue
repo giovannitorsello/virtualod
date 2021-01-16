@@ -117,16 +117,6 @@ import Tiledesk from './Tiledesk'
 
         setInterval(()=>{ this.updateStateLives() }, 3000);
     },
-    computed: {
-      showOpenLiveButton() {
-        var now=new Date();
-        var startTime=new Date(this.content.startTime);
-        if(now.getTime()>startTime.getTime())
-          return true;
-        else
-          return false;
-      }
-    },
     methods: {
       exitLive() {
         this.isStreaming=false;

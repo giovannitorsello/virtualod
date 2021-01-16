@@ -29,7 +29,7 @@
 
 
 
-<v-dialog  v-model="dialog" width="400">
+  <v-dialog  v-model="dialog" width="400">
     <v-card>
         <v-card-title
           class="headline grey lighten-2"
@@ -72,7 +72,7 @@
           </div>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+  </v-dialog>
 
 
 </div>
@@ -107,7 +107,9 @@ export default {
     setTimeout(() => {this.disableButtonInitDialog = false; console.log("Button activate");}, 8000);
   },
   methods: {
-    
+    menuActionClick(action) {
+      this.selectedCategory=action;
+    }
   }
 };
 </script>

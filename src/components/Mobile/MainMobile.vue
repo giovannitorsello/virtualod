@@ -72,7 +72,7 @@
           </div>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+</v-dialog>
 
 
 </div>
@@ -107,7 +107,9 @@ export default {
      setTimeout(() => {this.disableButtonInitDialog = false; console.log("Button activate");}, 8000);
   },
   methods: {
-    
+    menuActionClick(action) {
+      this.selectedCategory=action;
+    }
   }
 };
 </script>
