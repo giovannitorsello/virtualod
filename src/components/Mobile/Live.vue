@@ -29,8 +29,11 @@
                         {{content.tipologia}}
                       </div>
                       <div class="my-4 subtitle-1">
-                         Domenica 17 Gennaio 2021, ore {{content.oraInizio}} - <small>{{content.stanzaMeet}}</small>
-                      </div>                        
+                         Domenica 17 Gennaio 2021, ore {{content.oraInizio}} 
+                      </div>                       
+                      <div class="my-4 subtitle-1"> 
+                        <small>{{content.stanzaMeet}}</small>
+                      </div>
                     </v-card-text>
 
                     <v-divider class="mx-4"></v-divider>

@@ -43,7 +43,7 @@
           in diretta e di contenuti preregistrati che illustrano le attività della scuola.
           <br>
           E' presente un sistema di messaggistica (chat) interna, totalmente sicura e privata con cui puoi 
-          porre delle domande al nostro staff. Inserisci il tuo nome e la tua email. 
+          porre delle domande al nostro staff.
           <br>
           <b>
           Se lo vuoi puoi lasciare il numero di smartphone all'interno di un messaggio nel caso in cui desideri essere ricontattato in forma privata. 
@@ -104,7 +104,7 @@ export default {
           { id: "3", title: 'Info su', icon: 'mdi-help-box', action: "about" }]
   }),
   mounted: function () {
-     setTimeout(() => {this.disableButtonInitDialog = false; console.log("Button activate");}, 5000);
+     setTimeout(() => {this.disableButtonInitDialog = false; console.log("Button activate");}, 8000);
   },
   methods: {
     

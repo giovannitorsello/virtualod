@@ -43,7 +43,7 @@
           in diretta e di contenuti preregistrati che illustrano le attività della scuola.
           <br>
           E' presente un sistema di messaggistica (chat) interna, totalmente sicura e privata con cui puoi 
-          porre delle domande al nostro staff. Inserisci il tuo nome e la tua email. 
+          porre delle domande al nostro staff.
           <br>
           <b>
           Se lo vuoi puoi lasciare il numero di smartphone all'interno di un messaggio nel caso in cui desideri essere ricontattato in forma privata. 
@@ -56,7 +56,7 @@
           La chat è contrassegnata dall'icona
           <v-img width="25" height="25" src="tiledesk_chat_icon.png"></v-img>
           <br>
-          Scegli la tematica che ti interessa di più in alto.
+          Scegli la tematica che ti interessa.
           <br>
           Grazie per la partecipazione e buona visione.
         </v-card-text>
