@@ -8,8 +8,11 @@
             <Tiledesk :departmentId="departmentId"></Tiledesk>                           
         </div>
         <div class="contents-card">
-          <p>In caso di mancata visualizzazione clicca <a :href="urlLive"><b>qui</b></a> ma torna su questa pagina per scrivere le domande nella chat.</p>
-        </div>
+            <p>In caso di mancata visualizzazione clicca <a :href="urlLive" target="_blank"><b>qui</b></a> ma torna su questa pagina per scrivere le domande nella chat.</p>
+          </div>
+          <div class="contents-card">
+            <p><a :href="urlLive" target="_blank"><b>Link diretto al server di Youtube</b></a></p>
+          </div>
         <div class="contents-card">
           <v-btn class="ma-2" color="success" @click="exitLive()">Esci</v-btn>
         </div>
@@ -175,11 +178,11 @@ import Tiledesk from './Tiledesk'
       },
       openLive(content) {
         this.content=content;
-        this.urlLive="https://www.youtube.com/embed/"+content.idVideo;
+        this.urlLive=content.idVideo;
         this.departmentId=content.chatDepartmentId;
         this.isStreaming="true";
-        console.log("Video ID is:");
-        console.log(this.idVideo);
+        console.log("Url Live is:");
+        console.log(this.urlLive);
         console.log("Chat department is:");
         console.log(this.departmentId);
       },

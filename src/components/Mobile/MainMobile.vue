@@ -55,6 +55,11 @@
           <br>
           La chat è contrassegnata dall'icona
           <v-img width="25" height="25" src="tiledesk_chat_icon.png"></v-img>
+          <br>          
+          <b>
+          Per alune restrizioni di Youtube, la live porebbe non vedersi in questa pagina, ma sarà presente un link diretto per risolvere il problema.
+          Si continuare ad usare questa pagina per scrivere le domande nella chat.
+          </b>
           <br>
           Scegli la tematica che ti interessa.
           <br>
