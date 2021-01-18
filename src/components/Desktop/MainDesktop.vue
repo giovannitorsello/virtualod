@@ -58,7 +58,7 @@
           <br>
           <b>
           Per alune restrizioni di Youtube, la live porebbe non vedersi in questa pagina, ma sarà presente un link diretto per risolvere il problema.
-          Si deve usare questa pagine per scrivere le domande nella chat.
+          Si continuare ad usare questa pagina per scrivere le domande nella chat.
           </b>
           <br>
           Scegli la tematica che ti interessa.
@@ -99,12 +99,12 @@ export default {
   },
 
   data: () => ({
-    dialog: true,
+    dialog: false,
     disableButtonInitDialog: true,
-    selectedCategory: 'live',
+    selectedCategory: 'registered',
     chatIcon: path.join(__dirname, 'public', 'tiledek_chat_icon.png'),
     leftMenu: [
-          { id: "1", title: 'Online ora', icon: 'mdi-view-dashboard', action: "live" },
+          //{ id: "1", title: 'Online ora', icon: 'mdi-view-dashboard', action: "live" },
           { id: "2", title: 'Registrazioni', icon: 'mdi-image', action: "registered"},
           { id: "3", title: 'Info su', icon: 'mdi-help-box', action: "about" }]
   }),
